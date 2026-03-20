@@ -1,5 +1,5 @@
 aiogram==2.25.1
-yt-dlp
-aiohttp
-python-dotenv
+yt-dlp==2026.3.17
+aiohttp==3.9.3
+python-dotenv==1.2.2
 psycopg2-binary
