@@ -361,13 +361,26 @@ async def feedback_handler(message: types.Message, state: FSMContext):
         await message.answer(STRINGS[l]['fb_ok'])
 
 # --- UPTIME SERVER ---
-async def h(r): return web.Response(text="Morvi Engine Alive v6.0")
-app = web.Application(); app.router.add_get("/", h)
+# --- UPTIME SERVER ---
+async def h(r): 
+    return web.Response(text="Morvi Engine Alive v6.0")
+
+app = web.Application()
+app.router.add_get("/", h)
 
 if __name__ == '__main__':
-    if not os.path.exists('downloads'): os.makedirs('downloads')
+    if not os.path.exists('downloads'): 
+        os.makedirs('downloads')
+    
+    # Render динамически назначает порт через переменную окружения PORT
+    port = int(os.environ.get("PORT", 8080))
+    
     loop = asyncio.get_event_loop()
     runner = web.AppRunner(app)
     loop.run_until_complete(runner.setup())
-    loop.create_task(web.TCPSite(runner, '0.0.0.0', 8080).start())
+    
+    # Запускаем веб-сервер на нужном порту
+    loop.create_task(web.TCPSite(runner, '0.0.0.0', port).start())
+    
     executor.start_polling(dp, skip_updates=True)
+
